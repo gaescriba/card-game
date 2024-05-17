@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
-import makeDeck from './utils/makeDeck.js'
+import makeDeck from './utils/makeDeck.js';
 
-import useDeck from './hooks/useDeck.js'
+import useDeck from './hooks/useDeck.js';
 
-import Card from './components/Card.jsx'
+import Card from './components/Card.jsx';
+
+import { defaultCard } from './utils/constants.js';
 
 const App = () => {
 
@@ -47,6 +49,16 @@ const App = () => {
     setChange(!change);
   }
 
+  const reset = () => {
+    
+    setChange(!change);
+    setLeftDeck(localDeck);
+    setMiddleDeck([defaultCard]);
+    setRightDeck([defaultCard]);
+    setChange(!change);
+    
+  }
+
   useEffect(()=> {
     setLeftDeck(leftDeck);
     setMiddleDeck(middleDeck);
@@ -64,6 +76,9 @@ const App = () => {
       <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
         <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
       </div>
+      <button onClick={reset}>
+        Reset
+      </button>
    </div>
   )
 

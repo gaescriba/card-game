@@ -32,13 +32,22 @@ const useDeck = () => {
 
   }
 
+  const minigame = () => {
+
+    const targets = ["A", "2", "3", "4"];
+    const randomTarget = targets[Math.floor(Math.random() * targets.length)];
+
+    return randomTarget;
+
+  }
+
   const dummy = () => {
 
     console.log("dummy");
 
   };
 
-  return { passCard, shuffleDeck, dummy };
+  return { passCard, shuffleDeck, minigame, dummy };
 
 };
 

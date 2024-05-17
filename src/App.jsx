@@ -10,12 +10,14 @@ import { defaultCard } from './utils/constants.js';
 
 const App = () => {
 
-  const { passCard, shuffleDeck, dummy } = useDeck();
+  const { passCard, shuffleDeck, minigame, dummy } = useDeck();
 
   const [localDeck, setLocalDeck] = useState(makeDeck());
   const [leftDeck, setLeftDeck] = useState(localDeck);
   const [middleDeck, setMiddleDeck] = useState([{suit: "X", value: '0'}]);
   const [rightDeck, setRightDeck] = useState([{suit: "X", value: '0'}]);
+  const [minigameTarget, setMinigameTarget] = useState(0);
+  const [minigameStarted, setMinigameStarted] = useState(false);
   const [change, setChange] = useState();
 
   const passLeftCard = option => {
@@ -38,10 +40,15 @@ const App = () => {
         right = [leftDeck, setLeftDeck];
       break;
     }
+
     const refreshDecks = (left, right) => {
+
       const decks = passCard(left[0], right[0]);
-      left[1](decks.leftDeck)
-      right[1](decks.rightDeck);
+      const setFirstDeck = left[1];
+      const setSecondDeck = right[1];
+      setFirstDeck(decks.leftDeck);
+      setSecondDeck(decks.rightDeck);
+
     }
 
     refreshDecks(left,right);
@@ -49,38 +56,55 @@ const App = () => {
     setChange(!change);
   }
 
-  const handleShuffle = () => {
+  const handleMinigame = () => {
     
     setChange(!change);
     const shuffledDeck = shuffleDeck(localDeck);
     setLeftDeck(shuffleDeck);
     setMiddleDeck([defaultCard]);
     setRightDeck([defaultCard]);
+
+    const target = minigame();
+    setMinigameTarget(target);
+
+    if(!minigameStarted){
+      setMinigameStarted(true);
+    }
+
     setChange(!change);
     
-  }
+  };
 
   useEffect(()=> {
     setLeftDeck(leftDeck);
     setMiddleDeck(middleDeck);
     setRightDeck(rightDeck);
-  },[change])
+  },[change]);
 
   return (
-    <div className="grid grid-cols-3 gap-5 items-center justify-center">
-      <div className="bg-green-300" onClick={() => passLeftCard(0)}>
-        <Card suitProp = { leftDeck[0].suit } valueProp = { leftDeck[0].value }/>
+    <>
+      <div className="grid grid-cols-3 gap-5 items-center justify-center">
+        <div className="bg-green-300" onClick={() => passLeftCard(0)}>
+          <Card suitProp = { leftDeck[0].suit } valueProp = { leftDeck[0].value }/>
+        </div>
+        <div className="bg-red-400" onClick={() => passLeftCard(1)}>
+          <Card suitProp = { middleDeck[0].suit  } valueProp = { middleDeck[0].value }/>
+        </div>
+        <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
+          <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
+        </div>
       </div>
-      <div className="bg-red-400" onClick={() => passLeftCard(1)}>
-        <Card suitProp = { middleDeck[0].suit  } valueProp = { middleDeck[0].value }/>
-      </div>
-      <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
-        <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
-      </div>
-      <button onClick={handleShuffle}>
+      <button onClick={handleMinigame}>
         Reset
       </button>
-   </div>
+      <br/>
+      {
+        minigameStarted &&
+        <>
+          El valor es: {minigameTarget}
+        </>
+      }
+    </>
   )
 
 }

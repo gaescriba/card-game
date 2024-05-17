@@ -41,13 +41,33 @@ const useDeck = () => {
 
   }
 
+  const checkWin = (leftTop, middleTop, rightTop, target) => {
+
+    console.log(leftTop, middleTop, rightTop);
+
+    if(leftTop != undefined && middleTop != undefined && rightTop != undefined){
+
+      console.log(leftTop.value == target);
+      console.log(middleTop.value == target);
+      console.log(rightTop.value == target);
+
+      if(leftTop.value == target && middleTop.value == target && rightTop.value == target){
+
+        alert("Has ganado!");
+        
+      };
+
+    };
+
+  };
+
   const dummy = () => {
 
     console.log("dummy");
 
   };
 
-  return { passCard, shuffleDeck, minigame, dummy };
+  return { passCard, shuffleDeck, minigame, checkWin, dummy };
 
 };
 

@@ -8,33 +8,32 @@ const Card = (props = {suit: 'X', value: '0'}) => {
 
   useEffect(()=> {
     setSuitState(props.suitProp);
-    setValueState(props.valueProp);
+    props.valueProp == "0" ? setValueState("") : setValueState(props.valueProp);
   },[props.suitProp, props.valueProp]);
 
   return (
   
-    <div className="bg-stone-400">
-      <div className="container_left">
-        {
-          suitState == "H" &&
-          <ImHeart/>
-        }
-        {
-          suitState == "S" &&
-          <ImSpades/>
-        }
-        {
-          suitState == "D" &&
-          <ImDiamonds/>
-        }
-        {
-          suitState == "C" &&
-          <ImClubs/>
-        }
-
+    <div className="flex basis-1/3 justify-center align-center relative min-h-full">
+      <div className="absolute top-4 left-4 flex flex-col">
         { valueState }
+        {
+          suitState == "H" &&
+          <ImHeart/>
+        }
+        {
+          suitState == "S" &&
+          <ImSpades/>
+        }
+        {
+          suitState == "D" &&
+          <ImDiamonds/>
+        }
+        {
+          suitState == "C" &&
+          <ImClubs/>
+        }
       </div>
-      <div className="container_center place-self-center">
+      <div className="place-self-center">
         {
           suitState == "H" &&
           <ImHeart/>
@@ -53,25 +52,24 @@ const Card = (props = {suit: 'X', value: '0'}) => {
         }
 
       </div>
-      <div className="container_right rotate-180">
-        {
-          suitState == "H" &&
-          <ImHeart/>
-        }
-        {
-          suitState == "S" &&
-          <ImSpades/>
-        }
-        {
-          suitState == "D" &&
-          <ImDiamonds/>
-        }
-        {
-          suitState == "C" &&
-          <ImClubs/>
-        }
-
+      <div className="rotate-180 absolute bottom-4 right-4 flex flex-col">
         { valueState }
+        {
+          suitState == "H" &&
+          <ImHeart/>
+        }
+        {
+          suitState == "S" &&
+          <ImSpades/>
+        }
+        {
+          suitState == "D" &&
+          <ImDiamonds/>
+        }
+        {
+          suitState == "C" &&
+          <ImClubs/>
+        }
       </div>
     </div>
 

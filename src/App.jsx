@@ -10,7 +10,7 @@ import { defaultCard } from './utils/constants.js';
 
 const App = () => {
 
-  const { passCard, shuffleDeck, minigame, dummy } = useDeck();
+  const { passCard, shuffleDeck, minigame, checkWin, dummy } = useDeck();
 
   const [localDeck, setLocalDeck] = useState(makeDeck());
   const [leftDeck, setLeftDeck] = useState(localDeck);
@@ -52,6 +52,10 @@ const App = () => {
     }
 
     refreshDecks(left,right);
+    
+    if(minigameStarted){
+      checkWin(leftDeck[0], middleDeck[0], rightDeck[0], minigameTarget);
+    };
 
     setChange(!change);
   }
@@ -82,29 +86,29 @@ const App = () => {
   },[change]);
 
   return (
-    <>
-      <div className="grid grid-cols-3 gap-5 items-center justify-center">
-        <div className="bg-green-300" onClick={() => passLeftCard(0)}>
+    <div className="flex flex-col align-center justify-around h-screen" >
+      <div className="flex flex-row justify-around">
+        <div className="min-w-80 min-h-96 rounded-2xl border-2 border-black" onClick={() => passLeftCard(0)}>
           <Card suitProp = { leftDeck[0].suit } valueProp = { leftDeck[0].value }/>
         </div>
-        <div className="bg-red-400" onClick={() => passLeftCard(1)}>
+        <div className="min-w-80 min-h-96 rounded-2xl border-2 border-black" onClick={() => passLeftCard(1)}>
           <Card suitProp = { middleDeck[0].suit  } valueProp = { middleDeck[0].value }/>
         </div>
-        <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
+        <div className="min-w-80 min-h-96 rounded-2xl border-2 border-black"onClick={() => passLeftCard(2)}>
           <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
         </div>
       </div>
-      <button onClick={handleMinigame}>
+      <button onClick={handleMinigame} className="border-2 rounded-xl border-black w-20 place-self-center">
         Reset
       </button>
       <br/>
       {
         minigameStarted &&
-        <>
+        <div className="text-center">
           El valor es: {minigameTarget}
-        </>
+        </div>
       }
-    </>
+    </div>
   )
 
 }

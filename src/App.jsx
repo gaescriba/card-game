@@ -18,7 +18,15 @@ const App = () => {
   const [rightDeck, setRightDeck] = useState([{suit: "X", value: '0'}]);
   const [minigameTarget, setMinigameTarget] = useState(0);
   const [minigameStarted, setMinigameStarted] = useState(false);
+  const [minigameWon, setMinigameWon] = useState(false);
   const [change, setChange] = useState();
+
+  const refreshAndClear = () => {
+    const shuffledDeck = shuffleDeck(localDeck);
+    setLeftDeck(shuffleDeck);
+    setMiddleDeck([defaultCard]);
+    setRightDeck([defaultCard]);
+  };
 
   const passLeftCard = option => {
     setChange(!change);
@@ -54,19 +62,19 @@ const App = () => {
     refreshDecks(left,right);
     
     if(minigameStarted){
-      checkWin(leftDeck[0], middleDeck[0], rightDeck[0], minigameTarget);
+
+      setMinigameWon(checkWin(leftDeck[0], middleDeck[0], rightDeck[0], minigameTarget));
+
     };
 
     setChange(!change);
   }
 
   const handleMinigame = () => {
-    
+
     setChange(!change);
-    const shuffledDeck = shuffleDeck(localDeck);
-    setLeftDeck(shuffleDeck);
-    setMiddleDeck([defaultCard]);
-    setRightDeck([defaultCard]);
+    
+    refreshAndClear();
 
     const target = minigame();
     setMinigameTarget(target);
@@ -80,10 +88,22 @@ const App = () => {
   };
 
   useEffect(()=> {
+
     setLeftDeck(leftDeck);
     setMiddleDeck(middleDeck);
     setRightDeck(rightDeck);
+
   },[change]);
+
+  useEffect(()=> {
+
+    if(minigameWon){
+
+      refreshAndClear();
+
+    };
+
+  },[minigameWon]);
 
   return (
     <div className="flex flex-col align-center justify-around h-screen" >

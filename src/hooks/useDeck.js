@@ -54,6 +54,8 @@ const useDeck = () => {
       if(leftTop.value == target && middleTop.value == target && rightTop.value == target){
 
         alert("Has ganado!");
+
+        return true;
         
       };
 

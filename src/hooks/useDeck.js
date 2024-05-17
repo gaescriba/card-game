@@ -17,13 +17,37 @@ const useDeck = () => {
     return { leftDeck, rightDeck };
   };
 
+  const shuffleDeck = deck => {
+
+    let currentIndex = deck.length;
+    while(currentIndex != 0){
+
+      let randomCard = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [deck[currentIndex], deck[randomCard]] = [deck[randomCard], deck[currentIndex]];
+    }
+
+    return deck;
+
+  }
+
+  const minigame = () => {
+
+    const targets = ["A", "2", "3", "4"];
+    const randomTarget = targets[Math.floor(Math.random() * targets.length)];
+
+    return randomTarget;
+
+  }
+
   const dummy = () => {
 
     console.log("dummy");
 
   };
 
-  return { passCard, dummy };
+  return { passCard, shuffleDeck, minigame, dummy };
 
 };
 

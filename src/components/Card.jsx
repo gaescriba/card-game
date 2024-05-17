@@ -1,68 +1,77 @@
+import { useState, useEffect } from 'react';
 import { ImHeart, ImSpades, ImDiamonds, ImClubs } from 'react-icons/im';
 
-const Card = props => {
+const Card = (props = {suit: 'X', value: '0'}) => {
+  
+  const[suitState, setSuitState] = useState(props.suitProp);
+  const[valueState, setValueState] = useState(props.valueProp);
+
+  useEffect(()=> {
+    setSuitState(props.suitProp);
+    setValueState(props.valueProp);
+  },[props.suitProp, props.valueProp]);
 
   return (
   
-    <div class="absolute bg-stone-400 flex size-40 items justify-around">
-      <div class="container_left">
+    <div className="bg-stone-400">
+      <div className="container_left">
         {
-          props.suitProp == "H" &&
+          suitState == "H" &&
           <ImHeart/>
         }
         {
-          props.suitProp == "S" &&
-          <ImHeart/>
+          suitState == "S" &&
+          <ImSpades/>
         }
         {
-          props.suitProp == "D" &&
-          <ImHeart/>
+          suitState == "D" &&
+          <ImDiamonds/>
         }
         {
-          props.suitProp == "C" &&
-          <ImHeart/>
+          suitState == "C" &&
+          <ImClubs/>
         }
 
-        {props.valueProp}
+        { valueState }
       </div>
-      <div class="container_center place-self-center">
+      <div className="container_center place-self-center">
         {
-          props.suitProp == "H" &&
+          suitState == "H" &&
           <ImHeart/>
         }
         {
-          props.suitProp == "S" &&
-          <ImHeart/>
+          suitState == "S" &&
+          <ImSpades/>
         }
         {
-          props.suitProp == "D" &&
-          <ImHeart/>
+          suitState == "D" &&
+          <ImDiamonds/>
         }
         {
-          props.suitProp == "C" &&
-          <ImHeart/>
+          suitState == "C" &&
+          <ImClubs/>
         }
 
       </div>
-      <div class="container_right rotate-180">
+      <div className="container_right rotate-180">
         {
-          props.suitProp == "H" &&
+          suitState == "H" &&
           <ImHeart/>
         }
         {
-          props.suitProp == "S" &&
-          <ImHeart/>
+          suitState == "S" &&
+          <ImSpades/>
         }
         {
-          props.suitProp == "D" &&
-          <ImHeart/>
+          suitState == "D" &&
+          <ImDiamonds/>
         }
         {
-          props.suitProp == "C" &&
-          <ImHeart/>
+          suitState == "C" &&
+          <ImClubs/>
         }
 
-        {props.valueProp}
+        { valueState }
       </div>
     </div>
 

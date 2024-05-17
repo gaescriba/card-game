@@ -12,8 +12,7 @@ const App = () => {
 
   const { passCard, shuffleDeck, minigame, checkWin, dummy } = useDeck();
 
-  const [localDeck, setLocalDeck] = useState(makeDeck());
-  const [leftDeck, setLeftDeck] = useState(localDeck);
+  const [leftDeck, setLeftDeck] = useState(makeDeck());
   const [middleDeck, setMiddleDeck] = useState([defaultCard]);
   const [rightDeck, setRightDeck] = useState([defaultCard]);
   const [minigameTarget, setMinigameTarget] = useState(0);
@@ -22,8 +21,8 @@ const App = () => {
   const [change, setChange] = useState();
 
   const refreshAndClear = () => {
-    const shuffledDeck = shuffleDeck(localDeck);
-    setLeftDeck(shuffleDeck);
+    const shuffledDeck = shuffleDeck(makeDeck());
+    setLeftDeck(shuffledDeck);
     setMiddleDeck([defaultCard]);
     setRightDeck([defaultCard]);
   };
@@ -61,13 +60,14 @@ const App = () => {
 
     refreshDecks(left,right);
     
+    
+
+    setChange(!change);
     if(minigameStarted){
 
       setMinigameWon(checkWin(leftDeck[0], middleDeck[0], rightDeck[0], minigameTarget));
 
     };
-
-    setChange(!change);
   }
 
   const handleMinigame = () => {

@@ -1,4 +1,4 @@
-import { defaultCard } from '../utils/constants.js'
+import { defaultCard } from '../utils/constants.js';
 const useDeck = () => {
 
   const passCard = (leftDeck, rightDeck) => {
@@ -12,7 +12,7 @@ const useDeck = () => {
     console.log(leftDeck.length == 0);
     if(leftDeck.length == 0){
       leftDeck = [defaultCard];
-    }
+    };
 
     return { leftDeck, rightDeck };
   };
@@ -26,20 +26,55 @@ const useDeck = () => {
       currentIndex--;
 
       [deck[currentIndex], deck[randomCard]] = [deck[randomCard], deck[currentIndex]];
-    }
+    };
 
     return deck;
 
-  }
+  };
 
-  const minigame = () => {
+  const startMinigame = () => {
 
     const targets = ["A", "2", "3", "4"];
     const randomTarget = targets[Math.floor(Math.random() * targets.length)];
 
     return randomTarget;
 
-  }
+  };
+
+  const checkWinner = (leftTop, middleTop, rightTop, target) => {
+
+    if(leftTop == undefined) {
+
+      leftTop = defaultCard;
+
+    };
+
+    if(middleTop == undefined) {
+
+      middleTop = defaultCard;
+
+    };
+    if(rightTop == undefined) {
+
+      rightTop = defaultCard;
+
+    };
+
+    console.log(leftTop.value);
+    console.log(middleTop.value);
+    console.log(rightTop.value);
+
+    console.log(leftTop.value == target);
+    console.log(middleTop.value == target);
+    console.log(rightTop.value == target);
+
+    if(leftTop.value == target && middleTop.value == target && rightTop.value == target){
+
+      alert("Has ganado!");
+
+    };
+
+  };
 
   const dummy = () => {
 
@@ -47,7 +82,7 @@ const useDeck = () => {
 
   };
 
-  return { passCard, shuffleDeck, minigame, dummy };
+  return { passCard, shuffleDeck, startMinigame, checkWinner, dummy };
 
 };
 

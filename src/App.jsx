@@ -10,17 +10,16 @@ import { defaultCard } from './utils/constants.js';
 
 const App = () => {
 
-  const { passCard, shuffleDeck, minigame, dummy } = useDeck();
+  const { passCard, shuffleDeck, startMinigame, checkWinner, dummy } = useDeck();
 
-  const [localDeck, setLocalDeck] = useState(makeDeck());
-  const [leftDeck, setLeftDeck] = useState(localDeck);
+  const [leftDeck, setLeftDeck] = useState(makeDeck());
   const [middleDeck, setMiddleDeck] = useState([{suit: "X", value: '0'}]);
   const [rightDeck, setRightDeck] = useState([{suit: "X", value: '0'}]);
   const [minigameTarget, setMinigameTarget] = useState(0);
   const [minigameStarted, setMinigameStarted] = useState(false);
   const [change, setChange] = useState();
 
-  const passLeftCard = option => {
+  const handlePass = option => {
     setChange(!change);
     let left;
     let right;
@@ -53,18 +52,20 @@ const App = () => {
 
     refreshDecks(left,right);
 
+    checkWinner(leftDeck[0], middleDeck[0], rightDeck[0], minigameTarget);
+
     setChange(!change);
   }
 
   const handleMinigame = () => {
     
     setChange(!change);
-    const shuffledDeck = shuffleDeck(localDeck);
-    setLeftDeck(shuffleDeck);
+    const shuffledDeck = shuffleDeck(makeDeck());
+    setLeftDeck(shuffledDeck);
     setMiddleDeck([defaultCard]);
     setRightDeck([defaultCard]);
 
-    const target = minigame();
+    const target = startMinigame();
     setMinigameTarget(target);
 
     if(!minigameStarted){
@@ -84,18 +85,18 @@ const App = () => {
   return (
     <>
       <div className="grid grid-cols-3 gap-5 items-center justify-center">
-        <div className="bg-green-300" onClick={() => passLeftCard(0)}>
+        <div className="bg-green-300" onClick={() => handlePass(0)}>
           <Card suitProp = { leftDeck[0].suit } valueProp = { leftDeck[0].value }/>
         </div>
-        <div className="bg-red-400" onClick={() => passLeftCard(1)}>
+        <div className="bg-red-400" onClick={() => handlePass(1)}>
           <Card suitProp = { middleDeck[0].suit  } valueProp = { middleDeck[0].value }/>
         </div>
-        <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
+        <div className="bg-blue-500"onClick={() => handlePass(2)}>
           <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
         </div>
       </div>
       <button onClick={handleMinigame}>
-        Reset
+        { minigameStarted ? "Reset" : "Start" }
       </button>
       <br/>
       {

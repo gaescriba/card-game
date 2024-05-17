@@ -14,8 +14,8 @@ const App = () => {
 
   const [localDeck, setLocalDeck] = useState(makeDeck());
   const [leftDeck, setLeftDeck] = useState(localDeck);
-  const [middleDeck, setMiddleDeck] = useState([{suit: "X", value: '0'}]);
-  const [rightDeck, setRightDeck] = useState([{suit: "X", value: '0'}]);
+  const [middleDeck, setMiddleDeck] = useState([defaultCard]);
+  const [rightDeck, setRightDeck] = useState([defaultCard]);
   const [minigameTarget, setMinigameTarget] = useState(0);
   const [minigameStarted, setMinigameStarted] = useState(false);
   const [minigameWon, setMinigameWon] = useState(false);

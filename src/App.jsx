@@ -10,7 +10,7 @@ import { defaultCard } from './utils/constants.js';
 
 const App = () => {
 
-  const { passCard, dummy } = useDeck();
+  const { passCard, shuffleDeck, dummy } = useDeck();
 
   const [localDeck, setLocalDeck] = useState(makeDeck());
   const [leftDeck, setLeftDeck] = useState(localDeck);
@@ -49,10 +49,11 @@ const App = () => {
     setChange(!change);
   }
 
-  const reset = () => {
+  const handleShuffle = () => {
     
     setChange(!change);
-    setLeftDeck(localDeck);
+    const shuffledDeck = shuffleDeck(localDeck);
+    setLeftDeck(shuffleDeck);
     setMiddleDeck([defaultCard]);
     setRightDeck([defaultCard]);
     setChange(!change);
@@ -76,7 +77,7 @@ const App = () => {
       <div className="bg-blue-500"onClick={() => passLeftCard(2)}>
         <Card suitProp = { rightDeck[0] ? rightDeck[0].suit : 'X' } valueProp = { rightDeck[0] ? rightDeck[0].value : '0' }/>
       </div>
-      <button onClick={reset}>
+      <button onClick={handleShuffle}>
         Reset
       </button>
    </div>
